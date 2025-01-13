@@ -2,21 +2,32 @@
 #   comment = "OAI for accessing S3 content"
 # }
 
+resource "aws_cloudfront_origin_access_control" "default_cloudfront_oac" {
+  name                              = "default_cloudfront_oai"
+  description                       = "default_cloudfront_oai"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
+
+
 resource "aws_cloudfront_distribution" "default_website_distribution" {
 
   enabled = true
   #is_ipv6_enabled = true
   price_class = "PriceClass_100"
-  aliases     = ["www.dolapoadeeyocv.com"]
+  aliases     = ["dolapoadeeyocv.com", "www.dolapoadeeyocv.com"]
 
   viewer_certificate {
     acm_certificate_arn = aws_acm_certificate.default_certificate.arn
     ssl_support_method  = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
   }
 
   origin {
     domain_name = aws_s3_bucket.default_website_bucket.bucket_regional_domain_name
     origin_id   = aws_s3_bucket.default_website_bucket.bucket
+    origin_access_control_id = aws_cloudfront_origin_access_control.default_cloudfront_oac.id
 
     # s3_origin_config {
     #   origin_access_identity = aws_cloudfront_origin_access_identity.default_cloudfront_oai.id
@@ -53,11 +64,7 @@ resource "aws_cloudfront_distribution" "default_website_distribution" {
   }
 }
 
-resource "aws_cloudfront_origin_access_control" "default_cloudfront_oai" {
-  name                              = "default_cloudfront_oai"
-  description                       = "default_cloudfront_oai"
-  origin_access_control_origin_type = "s3"
-  signing_behavior                  = "always"
-  signing_protocol                  = "sigv4"
-}
 
+output "cloudfront_id" {
+    value = aws_cloudfront_distribution.default_website_distribution.id
+}
