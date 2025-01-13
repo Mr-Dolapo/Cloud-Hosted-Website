@@ -1,6 +1,6 @@
-resource "aws_cloudfront_origin_access_identity" "default_cloudfront_oai" {
-  comment = "OAI for accessing S3 content"
-}
+# resource "aws_cloudfront_origin_access_identity" "default_cloudfront_oai" {
+#   comment = "OAI for accessing S3 content"
+# }
 
 resource "aws_cloudfront_distribution" "default_website_distribution" {
 
@@ -18,9 +18,9 @@ resource "aws_cloudfront_distribution" "default_website_distribution" {
     domain_name = aws_s3_bucket.default_website_bucket.bucket_regional_domain_name
     origin_id   = aws_s3_bucket.default_website_bucket.bucket
 
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.default_cloudfront_oai.id
-    }
+    # s3_origin_config {
+    #   origin_access_identity = aws_cloudfront_origin_access_identity.default_cloudfront_oai.id
+    # }
   }
 
   default_cache_behavior {
@@ -53,4 +53,11 @@ resource "aws_cloudfront_distribution" "default_website_distribution" {
   }
 }
 
+resource "aws_cloudfront_origin_access_control" "default_cloudfront_oai" {
+  name                              = "default_cloudfront_oai"
+  description                       = "default_cloudfront_oai"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
 
