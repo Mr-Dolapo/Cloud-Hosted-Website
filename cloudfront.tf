@@ -1,7 +1,3 @@
-# resource "aws_cloudfront_origin_access_identity" "default_cloudfront_oai" {
-#   comment = "OAI for accessing S3 content"
-# }
-
 resource "aws_cloudfront_origin_access_control" "default_cloudfront_oac" {
   name                              = "default_cloudfront_oai"
   description                       = "default_cloudfront_oai"
@@ -13,6 +9,7 @@ resource "aws_cloudfront_origin_access_control" "default_cloudfront_oac" {
 
 resource "aws_cloudfront_distribution" "default_website_distribution" {
 
+  default_root_object = "index.html"
   enabled = true
   #is_ipv6_enabled = true
   price_class = "PriceClass_100"
@@ -28,10 +25,6 @@ resource "aws_cloudfront_distribution" "default_website_distribution" {
     domain_name = aws_s3_bucket.default_website_bucket.bucket_regional_domain_name
     origin_id   = aws_s3_bucket.default_website_bucket.bucket
     origin_access_control_id = aws_cloudfront_origin_access_control.default_cloudfront_oac.id
-
-    # s3_origin_config {
-    #   origin_access_identity = aws_cloudfront_origin_access_identity.default_cloudfront_oai.id
-    # }
   }
 
   default_cache_behavior {
@@ -62,9 +55,4 @@ resource "aws_cloudfront_distribution" "default_website_distribution" {
   tags = {
     Name = "default-distribution"
   }
-}
-
-
-output "cloudfront_id" {
-    value = aws_cloudfront_distribution.default_website_distribution.id
 }

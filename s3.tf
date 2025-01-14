@@ -27,12 +27,14 @@ resource "aws_s3_object" "default_index_html" {
   bucket = aws_s3_bucket.default_website_bucket.id
   key    = "index.html"
   source = "Website/index.html"
+  content_type = "text/html"
 }
 
 resource "aws_s3_object" "default_error_html" {
   bucket = aws_s3_bucket.default_website_bucket.id
   key    = "404.html"
   source = "Website/404.html"
+  content_type = "text/html"
 }
 
 resource "aws_s3_bucket_website_configuration" "default_website_configuration" {
@@ -45,4 +47,13 @@ resource "aws_s3_bucket_website_configuration" "default_website_configuration" {
   error_document {
     key = "Website/error.html"
   }
+}
+
+resource "aws_s3_bucket_policy" "bucket_policy" {
+  bucket = aws_s3_bucket.default_website_bucket.id
+
+  policy = templatefile("s3_policy.json.tpl", {
+    bucket_arn             = aws_s3_bucket.default_website_bucket.arn
+    cloudfront_arn       = aws_cloudfront_distribution.default_website_distribution.arn
+  })
 }
