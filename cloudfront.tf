@@ -28,14 +28,14 @@ resource "aws_cloudfront_distribution" "default_website_distribution" {
   }
 
   origin {
-    domain_name = aws_lb.app_lb.dns_name  # ECS Public IP
+    domain_name = aws_lb.app_lb.dns_name  
     origin_id   = "ecs-origin"
 
     custom_origin_config {
       http_port              = 80
       https_port             = 443
-      origin_protocol_policy = "http-only"  # Change to "match-viewer" if HTTPS is supported.
-      origin_ssl_protocols   = ["TLSv1.2"]  # Required for HTTPS connections.
+      origin_protocol_policy = "http-only"  
+      origin_ssl_protocols   = ["TLSv1.2"]  
     }
   }
 
@@ -59,7 +59,7 @@ resource "aws_cloudfront_distribution" "default_website_distribution" {
     default_ttl = 3600
   }
 
-  # Cache behavior for the /app path to forward to ECS
+  
   ordered_cache_behavior {
     path_pattern           = "/app/*"
     target_origin_id       = "ecs-origin"

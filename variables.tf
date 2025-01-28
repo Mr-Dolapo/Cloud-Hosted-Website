@@ -28,5 +28,5 @@ variable "cname_value_www" {
 
 variable "my_ip" {
   description = "My IP address for testing"
-  type = string
+  type        = string
 }

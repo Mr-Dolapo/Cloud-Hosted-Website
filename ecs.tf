@@ -6,8 +6,8 @@ resource "aws_ecs_task_definition" "app" {
   family                   = "snake-app"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = "256"  
-  memory                   = "512" 
+  cpu                      = "256"
+  memory                   = "512"
   execution_role_arn       = aws_iam_role.ecs_task_execution.arn
   container_definitions    = file("snake-app.json")
 }
@@ -22,7 +22,7 @@ resource "aws_ecs_service" "app_service" {
 
   network_configuration {
     subnets          = [aws_subnet.main_subnet.id]
-    security_groups  = [aws_security_group.ecs_service_sg_cidr.id, aws_security_group.ecs_service_sg_prefix.id]               
+    security_groups  = [aws_security_group.ecs_service_sg_cidr.id, aws_security_group.ecs_service_sg_alb.id]
     assign_public_ip = true
   }
 

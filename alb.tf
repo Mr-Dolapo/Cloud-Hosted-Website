@@ -2,10 +2,10 @@ resource "aws_lb" "app_lb" {
   name               = "app-lb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.ecs_service_sg_prefix.id]
-  subnets            = [aws_subnet.main_subnet.id, aws_subnet.main_subnet_2.id]  # Using only one subnet for cost-saving
+  security_groups    = [aws_security_group.alb_sg_prefix.id]
+  subnets            = [aws_subnet.main_subnet.id, aws_subnet.main_subnet_2.id]
 
-  enable_cross_zone_load_balancing = false  # Keeps traffic balanced across zones
+  enable_cross_zone_load_balancing = false
 }
 
 resource "aws_lb_target_group" "ecs_target_group" {
@@ -14,7 +14,7 @@ resource "aws_lb_target_group" "ecs_target_group" {
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main_vpc.id
   target_type = "ip"
-  
+
   health_check {
     path                = "/"
     interval            = 30
