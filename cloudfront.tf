@@ -65,7 +65,7 @@ resource "aws_cloudfront_distribution" "default_website_distribution" {
     target_origin_id       = "ecs-origin"
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
     compress               = true
 
     forwarded_values {

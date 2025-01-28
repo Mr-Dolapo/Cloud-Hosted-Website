@@ -7,7 +7,7 @@ resource "aws_security_group" "alb_sg_prefix" {
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
-    prefix_list_ids = ["pl-3b927c52"]
+    prefix_list_ids = ["pl-02cd2c6b"]
   }
 
   egress {

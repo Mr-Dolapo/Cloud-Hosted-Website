@@ -13,3 +13,8 @@ resource "aws_route_table_association" "default_association" {
   subnet_id      = aws_subnet.main_subnet.id
   route_table_id = aws_route_table.default_route_table.id
 }
+
+resource "aws_route_table_association" "default_association_2" {
+  subnet_id      = aws_subnet.main_subnet_2.id
+  route_table_id = aws_route_table.default_route_table.id
+}
