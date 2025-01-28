@@ -1,4 +1,11 @@
 terraform {
+  backend "s3" {
+    bucket         = "dolapo-prod-bucket"
+    dynamodb_table = "state-lock"
+    key            = "terraform/state/terraform.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+  }
   required_providers {
     aws = {
       source = "hashicorp/aws"
@@ -6,7 +13,5 @@ terraform {
   }
 }
 provider "aws" {
-  region     = "us-east-1"
-  access_key = var.access_key
-  secret_key = var.secret_key
+  region = "us-east-1"
 }

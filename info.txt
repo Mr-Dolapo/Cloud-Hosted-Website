@@ -6,14 +6,12 @@ resource "aws_cloudfront_origin_access_control" "default_cloudfront_oac" {
   signing_protocol                  = "sigv4"
 }
 
-
 resource "aws_cloudfront_distribution" "default_website_distribution" {
 
   default_root_object = "index.html"
   enabled             = true
-  #is_ipv6_enabled = true
-  price_class = "PriceClass_100"
-  aliases     = ["dolapoadeeyocv.com", "www.dolapoadeeyocv.com"]
+  price_class         = "PriceClass_100"
+  aliases             = ["dolapadeeyocv.com", "www.dolapadeeyocv.com"]
 
   viewer_certificate {
     acm_certificate_arn      = aws_acm_certificate.default_certificate.arn
@@ -27,18 +25,17 @@ resource "aws_cloudfront_distribution" "default_website_distribution" {
     origin_access_control_id = aws_cloudfront_origin_access_control.default_cloudfront_oac.id
   }
 
+  # Adding ECS Origin for /app path
   origin {
-    domain_name = aws_lb.app_lb.dns_name  # ECS Public IP
+    domain_name = "your-ecs-public-ip"  # Replace with ECS Public IP or Load Balancer DNS name if used
     origin_id   = "ecs-origin"
-
+    
     custom_origin_config {
-      http_port              = 80
-      https_port             = 443
-      origin_protocol_policy = "http-only"  # Change to "match-viewer" if HTTPS is supported.
-      origin_ssl_protocols   = ["TLSv1.2"]  # Required for HTTPS connections.
+      http_port  = 80  # If using HTTP
+      https_port = 443 # If using HTTPS
+      protocol_policy = "http-only"  # Use "match-viewer" if using HTTPS
     }
   }
-
 
   default_cache_behavior {
     allowed_methods        = ["GET", "HEAD"]
@@ -48,8 +45,6 @@ resource "aws_cloudfront_distribution" "default_website_distribution" {
 
     forwarded_values {
       query_string = false
-
-
       cookies {
         forward = "none"
       }
@@ -60,14 +55,12 @@ resource "aws_cloudfront_distribution" "default_website_distribution" {
   }
 
   # Cache behavior for the /app path to forward to ECS
-  ordered_cache_behavior {
+  cache_behavior {
     path_pattern           = "/app/*"
-    target_origin_id       = "ecs-origin"
-    allowed_methods        = ["GET", "HEAD"]
-    cached_methods         = ["GET", "HEAD"]
-    viewer_protocol_policy = "allow-all"
-    compress               = true
-
+    target_origin_id      = "ecs-origin"
+    allowed_methods       = ["GET", "HEAD"]
+    viewer_protocol_policy = "redirect-to-https"
+    compress              = true
     forwarded_values {
       query_string = false
       cookies {
@@ -79,7 +72,6 @@ resource "aws_cloudfront_distribution" "default_website_distribution" {
     default_ttl = 3600
   }
 
-
   restrictions {
     geo_restriction {
       restriction_type = "none"
@@ -89,5 +81,4 @@ resource "aws_cloudfront_distribution" "default_website_distribution" {
   tags = {
     Name = "default-distribution"
   }
-
 }

@@ -1,0 +1,16 @@
+[
+    {
+      "name": "snake-app",
+      "image": "225407007517.dkr.ecr.us-east-1.amazonaws.com/snake-app:1.0",
+      "cpu": 256,
+      "memory": 512,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true
+    }
+]
+  

@@ -55,4 +55,3 @@ resource "aws_route53_record" "default_cloudfront_record_www" {
     evaluate_target_health = true
   }
 }
-
