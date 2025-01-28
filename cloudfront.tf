@@ -28,7 +28,7 @@ resource "aws_cloudfront_distribution" "default_website_distribution" {
   }
 
   origin {
-    domain_name = aws_lb.app_lb.dns_name  
+    domain_name = "app-lb-2095875408.us-east-1.elb.amazonaws.com"  
     origin_id   = "ecs-origin"
 
     custom_origin_config {
@@ -61,7 +61,7 @@ resource "aws_cloudfront_distribution" "default_website_distribution" {
 
   
   ordered_cache_behavior {
-    path_pattern           = "/app/*"
+    path_pattern           = "/app"
     target_origin_id       = "ecs-origin"
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
@@ -70,6 +70,7 @@ resource "aws_cloudfront_distribution" "default_website_distribution" {
 
     forwarded_values {
       query_string = false
+      headers = ["Host"]      
       cookies {
         forward = "none"
       }
