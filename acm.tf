@@ -3,7 +3,8 @@ resource "aws_acm_certificate" "default_certificate" {
   validation_method = "DNS"
 
   subject_alternative_names = [
-    "www.dolapoadeeyocv.com"
+    "www.dolapoadeeyocv.com",
+    "app.dolapoadeeyocv.com"
   ]
 
   lifecycle {

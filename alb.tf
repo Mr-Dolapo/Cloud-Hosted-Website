@@ -46,13 +46,13 @@ resource "aws_lb_listener_rule" "app" {
 
   condition {
     path_pattern {
-      values = ["/app", "/app/*"]
+      values = ["/*"]
     }
   }
 
   condition {
     host_header {
-      values = ["dolapoadeeyocv.com"]
+      values = ["app.dolapoadeeyocv.com"]
     }
   }
 }

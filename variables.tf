@@ -26,6 +26,17 @@ variable "cname_value_www" {
   type        = string
 }
 
+variable "cname_name_app" {
+  description = "The name of the CNAME record for app"
+  type        = string
+}
+
+variable "cname_value_app" {
+  description = "The value of the CNAME record for app"
+  type        = string
+}
+
+
 variable "my_ip" {
   description = "My IP address for testing"
   type        = string

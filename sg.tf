@@ -4,9 +4,10 @@ resource "aws_security_group" "alb_sg_prefix" {
   vpc_id      = aws_vpc.main_vpc.id
 
   ingress {
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
+    from_port = 80
+    to_port   = 80
+    protocol  = "tcp"
+    # cidr_blocks = ["0.0.0.0/0"]
     prefix_list_ids = ["pl-3b927c52"]
   }
 
@@ -37,7 +38,7 @@ resource "aws_security_group" "ecs_service_sg" {
     cidr_blocks = [var.my_ip]
   }
 
-   ingress {
+  ingress {
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
