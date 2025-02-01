@@ -6,6 +6,7 @@ resource "aws_cloudfront_origin_access_control" "default_cloudfront_oac" {
   signing_protocol                  = "sigv4"
 }
 
+################################################################################################### CLOUDFRONT_S3 ####################################################################################################
 
 resource "aws_cloudfront_distribution" "default_website_distribution" {
   default_root_object = "index.html"
@@ -50,17 +51,18 @@ resource "aws_cloudfront_distribution" "default_website_distribution" {
   }
 
   tags = {
-    Name = "default-distribution"
+    Name = "${var.environment_prod}-distribution-s3"
+    Environment = "${var.environment_prod}"
   }
 }
 
-########################################## ALB - CLOUDFRONT #################################################
+################################################################################################### CLOUDFRONT_ALB ####################################################################################################
 
 resource "aws_cloudfront_distribution" "app_distribution" {
   aliases = ["app.dolapoadeeyocv.com"]
 
   origin {
-    domain_name = "app-lb-2095875408.us-east-1.elb.amazonaws.com"
+    domain_name = aws_lb.app_lb.dns_name
     origin_id   = "ALB-Origin"
 
     custom_origin_config {
@@ -104,7 +106,8 @@ resource "aws_cloudfront_distribution" "app_distribution" {
   }
 
   tags = {
-    Name = "app-distribution"
+    Name = "${var.environment_prod}-distribution-app"
+    Environment = "${var.environment_prod}"
   }
 }
 

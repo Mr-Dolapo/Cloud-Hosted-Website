@@ -6,6 +6,12 @@ resource "aws_lb" "app_lb" {
   subnets            = [aws_subnet.main_subnet.id, aws_subnet.main_subnet_2.id]
 
   enable_cross_zone_load_balancing = false
+
+  tags = {
+    Name = "${var.environment_prod}-alb"
+    Environment = "${var.environment_prod}"
+  }
+
 }
 
 resource "aws_lb_target_group" "ecs_target_group" {
@@ -21,6 +27,11 @@ resource "aws_lb_target_group" "ecs_target_group" {
     timeout             = 5
     healthy_threshold   = 2
     unhealthy_threshold = 2
+  }
+
+  tags = {
+    Name = "${var.environment_prod}-alb-target-group"
+    Environment = "${var.environment_prod}"
   }
 }
 

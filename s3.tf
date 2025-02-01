@@ -2,7 +2,8 @@ resource "aws_s3_bucket" "default_website_bucket" {
   bucket = "dolapo-website-bucket"
 
   tags = {
-    Name = "default-website-bucket"
+    Name = "${var.environment_prod}-website-bucket"
+    Environment = "${var.environment_prod}"
   }
 }
 

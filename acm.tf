@@ -12,7 +12,8 @@ resource "aws_acm_certificate" "default_certificate" {
   }
 
   tags = {
-    Name = "default-certificate"
+    Name = "${var.environment_prod}-certificate"
+    Environment = "${var.environment_prod}"
   }
 
 }

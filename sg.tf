@@ -7,7 +7,6 @@ resource "aws_security_group" "alb_sg_prefix" {
     from_port = 80
     to_port   = 80
     protocol  = "tcp"
-    # cidr_blocks = ["0.0.0.0/0"]
     prefix_list_ids = ["pl-3b927c52"]
   }
 
@@ -23,6 +22,11 @@ resource "aws_security_group" "alb_sg_prefix" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.environment_prod}-sg-alb"
+    Environment = "${var.environment_prod}"
   }
 }
 
@@ -50,6 +54,11 @@ resource "aws_security_group" "ecs_service_sg" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.environment_prod}-sg-ecs"
+    Environment = "${var.environment_prod}"
   }
 }
 

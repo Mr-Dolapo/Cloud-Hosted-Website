@@ -9,12 +9,18 @@ resource "aws_route53domains_registered_domain" "dolapoadeeyocv" {
   }
 
   tags = {
-    Name = "Default domain"
+    Name = "${var.environment_prod}-domain"
+    Environment = "${var.environment_prod}"
   }
 }
 
 resource "aws_route53_zone" "default_zone" {
   name = "dolapoadeeyocv.com"
+
+  tags = {
+    Name = "${var.environment_prod}-route53-zone"
+    Environment = "${var.environment_prod}"
+  }
 }
 
 # Fetch validation details from the certificate data

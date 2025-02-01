@@ -1,7 +1,9 @@
 resource "aws_route_table" "default_route_table" {
   vpc_id = aws_vpc.main_vpc.id
+
   tags = {
-    Name = "default-route-table"
+    Name = "${var.environment_prod}-route-table"
+    Environment = "${var.environment_prod}"
   }
 }
 resource "aws_route" "default_route" {

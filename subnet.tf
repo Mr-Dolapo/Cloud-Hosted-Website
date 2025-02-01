@@ -3,6 +3,11 @@ resource "aws_subnet" "main_subnet" {
   cidr_block              = "10.100.1.0/24"
   map_public_ip_on_launch = true
   availability_zone       = "us-east-1a"
+
+  tags = {
+    Name = "${var.environment_prod}-subnet-use-1a"
+    Environment = "${var.environment_prod}"
+  }
 }
 
 resource "aws_subnet" "main_subnet_2" {
@@ -10,4 +15,9 @@ resource "aws_subnet" "main_subnet_2" {
   cidr_block              = "10.100.2.0/24"
   map_public_ip_on_launch = true
   availability_zone       = "us-east-1b"
+
+  tags = {
+    Name = "${var.environment_prod}-use-1b"
+    Environment = "${var.environment_prod}"
+  }
 }

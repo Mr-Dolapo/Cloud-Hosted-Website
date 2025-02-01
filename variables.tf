@@ -1,3 +1,5 @@
+#################################################################################################### CREDENTIALS ####################################################################################################
+
 variable "access_key" {
   description = "AWS Access Key ID"
   type        = string
@@ -6,6 +8,23 @@ variable "secret_key" {
   description = "AWS Secret Key"
   type        = string
 }
+
+#################################################################################################### ENVIRONMENT ####################################################################################################
+
+variable "environment_prod" {
+  description = "AWS Production Environment"
+  type        = string
+}
+
+#################################################################################################### HOST_DETAILS ####################################################################################################
+
+variable "my_ip" {
+  description = "My IP address for testing"
+  type        = string
+}
+
+#################################################################################################### ROUTE_53_RECORDS ####################################################################################################
+
 variable "cname_name" {
   description = "The name of the CNAME record for certificate validation"
   type        = string
@@ -36,8 +55,3 @@ variable "cname_value_app" {
   type        = string
 }
 
-
-variable "my_ip" {
-  description = "My IP address for testing"
-  type        = string
-}

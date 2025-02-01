@@ -12,6 +12,11 @@ data "aws_iam_policy_document" "ecs_tasks_execution_role_policy" {
 resource "aws_iam_role" "ecs_task_execution" {
   name               = "ecsTaskExecutionRole"
   assume_role_policy = data.aws_iam_policy_document.ecs_tasks_execution_role_policy.json
+
+  tags = {
+    Name = "${var.environment_prod}-ecr-iam-role-ecs"
+    Environment = "${var.environment_prod}"
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_execution" {
