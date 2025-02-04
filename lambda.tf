@@ -2,7 +2,7 @@ resource "aws_lambda_function" "incident_handler" {
   function_name = "incident_handler"
   runtime       = "python3.11"
   handler       = "lambda_function.lambda_handler"
-  filename      = "lambda_function_payloadd.zip"
+  filename      = "lambda_function_payload.zip"
   role          = aws_iam_role.lambda_role.arn
 
   source_code_hash = filebase64sha256("lambda_function_payload.zip")

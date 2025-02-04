@@ -2,7 +2,7 @@ resource "aws_ecs_cluster" "app" {
   name = "app-cluster"
 
   tags = {
-    Name = "${var.environment_prod}-ecs-cluster"
+    Name        = "${var.environment_prod}-ecs-cluster"
     Environment = "${var.environment_prod}"
   }
 }
@@ -17,7 +17,7 @@ resource "aws_ecs_task_definition" "app" {
   container_definitions    = file("snake-app.json")
 
   tags = {
-    Name = "${var.environment_prod}-ecs-task-def-snake-app"
+    Name        = "${var.environment_prod}-ecs-task-def-snake-app"
     Environment = "${var.environment_prod}"
   }
 }
@@ -43,7 +43,7 @@ resource "aws_ecs_service" "app_service" {
   }
 
   tags = {
-    Name = "${var.environment_prod}-ecs-snake-app"
+    Name        = "${var.environment_prod}-ecs-snake-app"
     Environment = "${var.environment_prod}"
   }
 }

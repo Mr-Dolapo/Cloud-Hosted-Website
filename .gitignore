@@ -11,10 +11,13 @@ crash.log
 
 # Sensitive files
 *.tfvars
-*.tfvars.json
+*.tfvars.*
 credentials
 *_secrets
 
 # Ignore backup files
 *.bak
 *.backup
+
+# Test files
+lambda-function-test.py

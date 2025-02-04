@@ -7,7 +7,7 @@ resource "aws_ecr_repository" "snake-app" {
   }
 
   tags = {
-    Name = "${var.environment_prod}-ecr-snake-app"
+    Name        = "${var.environment_prod}-ecr-snake-app"
     Environment = "${var.environment_prod}"
   }
 }
@@ -21,7 +21,7 @@ resource "aws_ecr_repository" "app" {
   }
 
   tags = {
-    Name = "${var.environment_prod}-ecr-app"
+    Name        = "${var.environment_prod}-ecr-app"
     Environment = "${var.environment_prod}"
   }
 }
@@ -35,7 +35,7 @@ resource "aws_ecr_repository" "mongodb" {
   }
 
   tags = {
-    Name = "${var.environment_prod}-ecr-mongodb"
+    Name        = "${var.environment_prod}-ecr-mongodb"
     Environment = "${var.environment_prod}"
   }
 }
@@ -49,7 +49,7 @@ resource "aws_ecr_repository" "mongo_express" {
   }
 
   tags = {
-    Name = "${var.environment_prod}-ecr-mongo-express"
+    Name        = "${var.environment_prod}-ecr-mongo-express"
     Environment = "${var.environment_prod}"
   }
 }
